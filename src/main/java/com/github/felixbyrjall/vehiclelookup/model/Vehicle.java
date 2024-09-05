@@ -1,57 +1,38 @@
 package com.github.felixbyrjall.vehiclelookup.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Vehicle {
-    private String licensePlate;
-    private String make;
-    private String model;
-    private String year;
+    private String licensePlate;  // regnr
+    private String vin;  // understellsnummer
+    private String firstRegistrationDateInNorway;  // registrertForstegangNorgeDato
+    private String make;  // Merke
+    private String model;  // Handelsbetegnelse / modell
+    private String registrationStatus;  // Registreringsstatus
+    private String registrationDateOnCurrentOwner;  // Registreringsdato på nåværende eier
+    private String importCountry;  // Importland
+    private String importMilage;  // Kilometerstand
+    private String nextControlDate;  // Kontrollfrist eu godkjenning
+    private String lastControlDate;  // Siste eu godkjenning
+    private String fuelType;  // Drivstofftype
+    private String color;  // Farge
+    private String seatCount;  // Antall sitteplasser
+    private String emissionsClass;  // Euro utslippsklasse
 
-    // Default constructor
-    public Vehicle() {}
+    private double co2Emission;  // CO2 utslipp i blandet kjøring
+    private double fuelConsumption;  // Forbruk blandet kjøring
+    private double maxNetPower;  // Motor maks nettoeffekt
+    private double engineVolume;  // Motor slagvolum
 
-    // Constructor with parameters
-    public Vehicle(String licensePlate, String make, String model, String year) {
-        this.licensePlate = licensePlate;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-    }
-
-    // Getters and setters
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    @Override
-    public String toString() {
-        return "Vehicle [licensePlate=" + licensePlate + ", make=" + make + ", model=" + model + ", year=" + year + "]";
-    }
+    private int curbWeight; // egenvekt
+    private int minimumCurbWeight; // egenvektMinimum
+    private int payloadCapacity; // nyttelast
+    private int maxTrailerWeightWithBrakes; // tillattTilhengervektMedBrems
+    private int maxTrailerWeightWithoutBrakes; // tillattTilhengervektUtenBrems
+    private int maxTotalWeight; // tillattTotalvekt
+    private int maxVerticalCouplingLoad; // tillattVertikalKoplingslast
+    private int maxGrossWeight; // tillattVogntogvekt
 }
