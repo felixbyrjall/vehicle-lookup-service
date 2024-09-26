@@ -1,12 +1,22 @@
 package com.github.felixbyrjall.vehiclelookup.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Entity
+@Table(name = "vehicle cache")
 public class Vehicle {
+    @Id
+    @Column(name = "license_plate")
     private String licensePlate;  // regnr
+
+    //Other fields
     private String vin;  // understellsnummer
     private String firstRegistrationDateInNorway;  // registrertForstegangNorgeDato
     private String make;  // Merke
