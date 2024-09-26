@@ -24,7 +24,6 @@ public class Vehicle {
     private String registrationStatus;  // Registreringsstatus
     private String registrationDateOnCurrentOwner;  // Registreringsdato på nåværende eier
     private String importCountry;  // Importland
-    private String importMilage;  // Kilometerstand
     private String nextControlDate;  // Kontrollfrist eu godkjenning
     private String lastControlDate;  // Siste eu godkjenning
     private String fuelType;  // Drivstofftype
@@ -36,6 +35,7 @@ public class Vehicle {
     private double maxNetPower;  // Motor maks nettoeffekt
     private double engineVolume;  // Motor slagvolum
 
+    private int importMilage;  // Kilometerstand
     private int seatCount;  // Antall sitteplasser
     private int curbWeight; // egenvekt
     private int minimumCurbWeight; // egenvektMinimum

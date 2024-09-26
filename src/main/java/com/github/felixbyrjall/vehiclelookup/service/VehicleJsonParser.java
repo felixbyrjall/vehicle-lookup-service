@@ -57,7 +57,7 @@ public class VehicleJsonParser {
         JsonNode importData = vehicleData.path("godkjenning").path("forstegangsGodkjenning").path("bruktimport");
         if (importData != null && !importData.isMissingNode()) {
             vehicle.setImportCountry(importData.path("importland").path("landNavn").asText());
-            vehicle.setImportMilage(importData.path("kilometerstand").asText());
+            vehicle.setImportMilage(importData.path("kilometerstand").asInt());
         }
 
         // Set periodic control dates
