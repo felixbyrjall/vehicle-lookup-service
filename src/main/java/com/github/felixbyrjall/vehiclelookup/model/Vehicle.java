@@ -19,7 +19,6 @@ public class Vehicle {
     private String lastControlDate;  // Siste eu godkjenning
     private String fuelType;  // Drivstofftype
     private String color;  // Farge
-    private String seatCount;  // Antall sitteplasser
     private String emissionsClass;  // Euro utslippsklasse
 
     private double co2Emission;  // CO2 utslipp i blandet kjøring
@@ -27,6 +26,7 @@ public class Vehicle {
     private double maxNetPower;  // Motor maks nettoeffekt
     private double engineVolume;  // Motor slagvolum
 
+    private int seatCount;  // Antall sitteplasser
     private int curbWeight; // egenvekt
     private int minimumCurbWeight; // egenvektMinimum
     private int payloadCapacity; // nyttelast

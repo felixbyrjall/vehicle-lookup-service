@@ -83,7 +83,7 @@ public class VehicleJsonParser {
         // Set seating count
         JsonNode personTall = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("persontall");
         if (personTall != null && !personTall.isMissingNode()) {
-            vehicle.setSeatCount(personTall.path("sitteplasserTotalt").asText());
+            vehicle.setSeatCount(personTall.path("sitteplasserTotalt").asInt());
         }
 
         // Set emissions class, CO2 emission, and fuel consumption
