@@ -13,10 +13,11 @@ import lombok.Setter;
 @Table(name = "vehicle cache")
 public class Vehicle {
     @Id
-    @Column(name = "license_plate")
-    private String licensePlate;  // regnr
+    @Column(name = "vehicle_id", unique = true, nullable = false)
+    private String vehicleId; //
 
     //Other fields
+    private String licensePlate;  // regnr
     private String vin;  // understellsnummer
     private String firstRegistrationDateInNorway;  // registrertForstegangNorgeDato
     private String make;  // Merke

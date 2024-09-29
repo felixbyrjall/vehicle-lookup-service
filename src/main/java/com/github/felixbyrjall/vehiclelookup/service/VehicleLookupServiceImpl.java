@@ -44,7 +44,8 @@ public class VehicleLookupServiceImpl implements VehicleLookupService {
                     log.info("Successfully retrieved data for license plate: {}", licensePlate);
                     try {
                         Vehicle vehicle = vehicleJsonParser.parseVehicleFromJson(json);
-                        vehicle.setLicensePlate(licensePlate);
+                        //This is not needed anymore, as vehicleId is the new primary key
+                        //vehicle.setLicensePlate(licensePlate);
 
                         // Offload blocking DB call to boundedElastic
                         return Mono.fromCallable(() -> vehicleRepository.save(vehicle))
