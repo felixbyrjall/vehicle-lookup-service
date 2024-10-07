@@ -18,9 +18,9 @@ public class AdditionalDataService {
     }
 
     public Mono<VehicleDetailedDTO> addAdditionalVehicleData(VehicleDetailedDTO dto) {
-        String licensePlate = dto.getLicensePlate();
+        String vehicleId = dto.getVehicleId();
         return webClient.get()
-                .uri("/vehicle/plate-info/{licensePlate}", licensePlate)
+                .uri("/vehicle/plate-info/{vehicleId}", vehicleId)
                 .retrieve()
                 .bodyToMono(AdditionalDataDTO.class)
                 .map(additionalData -> {
@@ -32,7 +32,7 @@ public class AdditionalDataService {
                     return dto;
                 })
                 .onErrorResume(error -> {
-                    log.error("Error fetching additional data for license plate {}: {}", licensePlate, error.getMessage());
+                    log.error("Error fetching additional data for vehicleId {}: {}", vehicleId, error.getMessage());
                     return Mono.just(dto);
                 });
     }
