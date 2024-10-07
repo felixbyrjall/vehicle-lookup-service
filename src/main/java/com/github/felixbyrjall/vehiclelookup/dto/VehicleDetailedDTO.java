@@ -1,22 +1,13 @@
-package com.github.felixbyrjall.vehiclelookup.model;
+package com.github.felixbyrjall.vehiclelookup.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-@Entity
-@Table(name = "vehicle_cache")
-public class Vehicle {
-    @Id
-    @Column(name = "vehicle_id", unique = true, nullable = false)
-    private String vehicleId; //
+@Setter
+public class VehicleDetailedDTO {
 
-    //Other fields
+    private String vehicleId;  // Vehicle ID
     private String licensePlate;  // regnr
     private String vin;  // understellsnummer
     private String firstRegistrationDateInNorway;  // registrertForstegangNorgeDato

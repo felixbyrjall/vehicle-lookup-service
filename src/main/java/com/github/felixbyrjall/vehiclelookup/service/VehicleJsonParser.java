@@ -30,16 +30,42 @@ public class VehicleJsonParser {
 
         Vehicle vehicle = new Vehicle();
 
-        // Set license plate and VIN
-        JsonNode vehicleData = vehicleNode;
-        vehicle.setLicensePlate(vehicleData.path("kjoretoyId").path("kjennemerke").asText());
-        vehicle.setVin(vehicleData.path("kjoretoyId").path("understellsnummer").asText());
+        // Set vehicleId
+        String vehicleId = vehicleNode.path("kjoretoyId").path("kjennemerke").asText();
+        if (vehicleId != null && !vehicleId.trim().isEmpty()) {
+            vehicle.setVehicleId(vehicleId.trim().toUpperCase());
+        } else {
+            log.error("Invalid vehicle ID: {}", vehicleId);
+            throw new IllegalStateException("Vehicle ID cannot be null or empty");
+        }
+
+        // Set license plate
+        JsonNode kjennemerkeArray = vehicleNode.path("kjennemerke");
+        String licensePlate = null;
+        if (kjennemerkeArray.isArray() && kjennemerkeArray.size() > 0) {
+            // Get the last "kjennemerke" in the array
+            JsonNode lastKjennemerkeNode = kjennemerkeArray.get(kjennemerkeArray.size() - 1);
+            licensePlate = lastKjennemerkeNode.path("kjennemerke").asText();
+        }
+
+        if (licensePlate != null && !licensePlate.trim().isEmpty()) {
+            vehicle.setLicensePlate(licensePlate.trim().toUpperCase());
+        } else {
+            log.error("Invalid license plate: {}", licensePlate);
+            throw new IllegalStateException("License plate cannot be null or empty");
+        }
+
+// Add logging to confirm vehicleId and licensePlate are set
+        log.info("Set vehicleId to: {} and licensePlate to: {}", vehicle.getVehicleId(), vehicle.getLicensePlate());
+
+        // Set VIN
+        vehicle.setVin(vehicleNode.path("kjoretoyId").path("understellsnummer").asText());
 
         // Set first registration date
-        vehicle.setFirstRegistrationDateInNorway(vehicleData.path("forstegangsregistrering").path("registrertForstegangNorgeDato").asText());
+        vehicle.setFirstRegistrationDateInNorway(vehicleNode.path("forstegangsregistrering").path("registrertForstegangNorgeDato").asText());
 
         // Set make, model, and registration status
-        JsonNode generalData = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("generelt");
+        JsonNode generalData = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("generelt");
         if (generalData != null && !generalData.isMissingNode()) {
             JsonNode merkeNode = generalData.path("merke").get(0);
             if (merkeNode != null) {
@@ -50,54 +76,54 @@ public class VehicleJsonParser {
                 vehicle.setModel(handelsbetegnelseNode.asText());
             }
         }
-        vehicle.setRegistrationStatus(vehicleData.path("registrering").path("registreringsstatus").path("kodeBeskrivelse").asText());
-        vehicle.setRegistrationDateOnCurrentOwner(vehicleData.path("registrering").path("fomTidspunkt").asText());
+        vehicle.setRegistrationStatus(vehicleNode.path("registrering").path("registreringsstatus").path("kodeBeskrivelse").asText());
+        vehicle.setRegistrationDateOnCurrentOwner(vehicleNode.path("registrering").path("fomTidspunkt").asText());
 
         // Set import data
-        JsonNode importData = vehicleData.path("godkjenning").path("forstegangsGodkjenning").path("bruktimport");
+        JsonNode importData = vehicleNode.path("godkjenning").path("forstegangsGodkjenning").path("bruktimport");
         if (importData != null && !importData.isMissingNode()) {
             vehicle.setImportCountry(importData.path("importland").path("landNavn").asText());
-            vehicle.setImportMilage(importData.path("kilometerstand").asText());
+            vehicle.setImportMilage(importData.path("kilometerstand").asInt());
         }
 
         // Set periodic control dates
-        JsonNode periodicControl = vehicleData.path("periodiskKjoretoyKontroll");
+        JsonNode periodicControl = vehicleNode.path("periodiskKjoretoyKontroll");
         if (periodicControl != null && !periodicControl.isMissingNode()) {
             vehicle.setNextControlDate(periodicControl.path("kontrollfrist").asText());
             vehicle.setLastControlDate(periodicControl.path("sistGodkjent").asText());
         }
 
         // Set fuel type and color
-        JsonNode environmentalData = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("miljodata").path("miljoOgdrivstoffGruppe");
+        JsonNode environmentalData = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("miljodata").path("miljoOgdrivstoffGruppe");
         if (environmentalData != null && environmentalData.isArray() && environmentalData.size() > 0) {
             JsonNode fuelData = environmentalData.get(0);
             if (fuelData != null && !fuelData.isMissingNode()) {
                 vehicle.setFuelType(fuelData.path("drivstoffKodeMiljodata").path("kodeBeskrivelse").asText());
             }
         }
-        JsonNode colorData = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("karosseriOgLasteplan").path("rFarge");
+        JsonNode colorData = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("karosseriOgLasteplan").path("rFarge");
         if (colorData != null && colorData.isArray() && colorData.size() > 0) {
             vehicle.setColor(colorData.get(0).path("kodeNavn").asText());
         }
 
         // Set seating count
-        JsonNode personTall = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("persontall");
+        JsonNode personTall = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("persontall");
         if (personTall != null && !personTall.isMissingNode()) {
-            vehicle.setSeatCount(personTall.path("sitteplasserTotalt").asText());
+            vehicle.setSeatCount(personTall.path("sitteplasserTotalt").asInt());
         }
 
         // Set emissions class, CO2 emission, and fuel consumption
         if (environmentalData != null && environmentalData.isArray() && environmentalData.size() > 0) {
             JsonNode emissionDetails = environmentalData.get(0).path("forbrukOgUtslipp").get(0);
             if (emissionDetails != null && !emissionDetails.isMissingNode()) {
-                vehicle.setEmissionsClass(vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("miljodata").path("euroKlasse").path("kodeBeskrivelse").asText());
+                vehicle.setEmissionsClass(vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("miljodata").path("euroKlasse").path("kodeBeskrivelse").asText());
                 vehicle.setCo2Emission(emissionDetails.path("co2BlandetKjoring").asDouble());
                 vehicle.setFuelConsumption(emissionDetails.path("forbrukBlandetKjoring").asDouble());
             }
         }
 
         // Set engine information
-        JsonNode engineData = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("motorOgDrivverk").path("motor");
+        JsonNode engineData = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("motorOgDrivverk").path("motor");
         if (engineData != null && engineData.isArray() && engineData.size() > 0) {
             JsonNode engineDetails = engineData.get(0);
             if (engineDetails != null && !engineDetails.isMissingNode()) {
@@ -110,7 +136,7 @@ public class VehicleJsonParser {
         }
 
         // Set weight information
-        JsonNode weightData = vehicleData.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("vekter");
+        JsonNode weightData = vehicleNode.path("godkjenning").path("tekniskGodkjenning").path("tekniskeData").path("vekter");
         if (weightData != null && !weightData.isMissingNode()) {
             vehicle.setCurbWeight(weightData.path("egenvekt").asInt());
             vehicle.setMinimumCurbWeight(weightData.path("egenvektMinimum").asInt());
