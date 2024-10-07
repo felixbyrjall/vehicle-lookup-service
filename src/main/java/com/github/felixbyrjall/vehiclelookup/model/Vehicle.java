@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "vehicle cache")
+@Table(name = "vehicle_cache")
 public class Vehicle {
     @Id
     @Column(name = "vehicle_id", unique = true, nullable = false)
@@ -31,19 +31,23 @@ public class Vehicle {
     private String color;  // Farge
     private String emissionsClass;  // Euro utslippsklasse
 
-    private double co2Emission;  // CO2 utslipp i blandet kjøring
-    private double fuelConsumption;  // Forbruk blandet kjøring
-    private double maxNetPower;  // Motor maks nettoeffekt
-    private double engineVolume;  // Motor slagvolum
+    private Double co2Emission;  // CO2 utslipp i blandet kjøring
+    private Double fuelConsumption;  // Forbruk blandet kjøring
+    private Double maxNetPower;  // Motor maks nettoeffekt
+    private Double engineVolume;  // Motor slagvolum
 
-    private int importMilage;  // Kilometerstand
-    private int seatCount;  // Antall sitteplasser
-    private int curbWeight; // egenvekt
-    private int minimumCurbWeight; // egenvektMinimum
-    private int payloadCapacity; // nyttelast
-    private int maxTrailerWeightWithBrakes; // tillattTilhengervektMedBrems
-    private int maxTrailerWeightWithoutBrakes; // tillattTilhengervektUtenBrems
-    private int maxTotalWeight; // tillattTotalvekt
-    private int maxVerticalCouplingLoad; // tillattVertikalKoplingslast
-    private int maxGrossWeight; // tillattVogntogvekt
+    private Integer importMilage;  // Kilometerstand
+    private Integer seatCount;  // Antall sitteplasser
+    private Integer curbWeight; // egenvekt
+    private Integer minimumCurbWeight; // egenvektMinimum
+    private Integer payloadCapacity; // nyttelast
+    private Integer maxTrailerWeightWithBrakes; // tillattTilhengervektMedBrems
+    private Integer maxTrailerWeightWithoutBrakes; // tillattTilhengervektUtenBrems
+    private Integer maxTotalWeight; // tillattTotalvekt
+    private Integer maxVerticalCouplingLoad; // tillattVertikalKoplingslast
+    private Integer maxGrossWeight; // tillattVogntogvekt
+
+    private String county;
+    private String geographicalArea;
+    private String vehicleType;
 }
