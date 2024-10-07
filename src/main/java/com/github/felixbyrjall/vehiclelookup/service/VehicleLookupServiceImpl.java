@@ -28,12 +28,12 @@ public class VehicleLookupServiceImpl implements VehicleLookupService {
 
     @Override
     public Mono<Vehicle> lookupVehicle(String licensePlate) {
-        String url = "/enkeltoppslag/kjoretoydata?kjennemerke=" + licensePlate;
-
         log.info("Looking up vehicle with license plate: {}", licensePlate);
 
         return webClient.get()
-                .uri(url)
+                .uri(uriBuilder -> uriBuilder.path("/enkeltoppslag/kjoretoydata")
+                        .queryParam("kjennemerke", licensePlate)
+                        .build())
                 .header("SVV-Authorization", "Apikey " + apiKey)
                 .retrieve()
                 .bodyToMono(String.class)
