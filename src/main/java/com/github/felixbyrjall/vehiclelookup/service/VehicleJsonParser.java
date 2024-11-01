@@ -75,6 +75,11 @@ public class VehicleJsonParser {
             if (handelsbetegnelseNode != null) {
                 vehicle.setModel(handelsbetegnelseNode.asText());
             }
+            // Set type designation (typebetegnelse)
+            JsonNode typebetegnelseNode = generalData.path("typebetegnelse");
+            if (typebetegnelseNode != null && !typebetegnelseNode.isMissingNode()) {
+                vehicle.setTypeDesignation(typebetegnelseNode.asText());
+            }
         }
         vehicle.setRegistrationStatus(vehicleNode.path("registrering").path("registreringsstatus").path("kodeBeskrivelse").asText());
         vehicle.setRegistrationDateOnCurrentOwner(vehicleNode.path("registrering").path("fomTidspunkt").asText());

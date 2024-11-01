@@ -13,6 +13,7 @@ public class VehicleDetailedDTO {
     private String firstRegistrationDateInNorway;  // registrertForstegangNorgeDato
     private String make;  // Merke
     private String model;  // Handelsbetegnelse / modell
+    private String typeDesignation; // Typebetegnelse
     private String registrationStatus;  // Registreringsstatus
     private String registrationDateOnCurrentOwner;  // Registreringsdato på nåværende eier
     private String importCountry;  // Importland

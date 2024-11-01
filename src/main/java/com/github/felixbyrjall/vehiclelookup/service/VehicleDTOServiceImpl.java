@@ -39,6 +39,7 @@ public class VehicleDTOServiceImpl implements VehicleDTOService {
         dto.setLicensePlate(vehicle.getLicensePlate());
         dto.setMake(vehicle.getMake());
         dto.setModel(vehicle.getModel());
+        dto.setTypeDesignation(vehicle.getTypeDesignation());
         dto.setFuelType(vehicle.getFuelType());
         dto.setColor(vehicle.getColor());
         return dto;
@@ -52,6 +53,7 @@ public class VehicleDTOServiceImpl implements VehicleDTOService {
         dto.setFirstRegistrationDateInNorway(vehicle.getFirstRegistrationDateInNorway());
         dto.setMake(vehicle.getMake());
         dto.setModel(vehicle.getModel());
+        dto.setTypeDesignation(vehicle.getTypeDesignation());
         dto.setRegistrationStatus(vehicle.getRegistrationStatus());
         dto.setRegistrationDateOnCurrentOwner(vehicle.getRegistrationDateOnCurrentOwner());
         dto.setImportCountry(vehicle.getImportCountry());
