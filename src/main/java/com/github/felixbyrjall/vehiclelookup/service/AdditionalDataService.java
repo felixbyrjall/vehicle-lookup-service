@@ -20,7 +20,7 @@ public class AdditionalDataService {
     public Mono<VehicleDetailedDTO> addAdditionalVehicleData(VehicleDetailedDTO dto) {
         String vehicleId = dto.getVehicleId();
         return webClient.get()
-                .uri("/vehicle/plate-info/{vehicleId}", vehicleId)
+                .uri("/api/vehicle/plate-info/{vehicleId}", vehicleId)
                 .retrieve()
                 .bodyToMono(AdditionalDataDTO.class)
                 .map(additionalData -> {

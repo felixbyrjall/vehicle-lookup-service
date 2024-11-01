@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/api/vehicle")
 public class VehicleLookupController {
     private final VehicleDTOService vehicleDTOService;
 
