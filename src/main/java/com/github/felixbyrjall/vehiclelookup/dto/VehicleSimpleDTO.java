@@ -11,6 +11,7 @@ public class VehicleSimpleDTO {
     private String licensePlate;  // regnr
     private String make;  // Merke
     private String model;  // Handelsbetegnelse / modell
+    private String typeDesignation; // Typebetegnelse
     private String fuelType;  // Drivstofftype
     private String color;  // Farge
 }
