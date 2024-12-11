@@ -5,6 +5,6 @@ import com.github.felixbyrjall.vehiclelookup.dto.VehicleSimpleDTO;
 import reactor.core.publisher.Mono;
 
 public interface VehicleDTOService {
-    Mono<VehicleSimpleDTO> lookupVehicleSimple(String licensePlate);
-    Mono<VehicleDetailedDTO> lookupVehicleDetailed(String licensePlate);
+    Mono<VehicleSimpleDTO> lookupVehicleSimple(String licensePlate, String userId);
+    Mono<VehicleDetailedDTO> lookupVehicleDetailed(String licensePlate, String userId);
 }

@@ -19,14 +19,14 @@ public class VehicleDTOServiceImpl implements VehicleDTOService {
     }
 
     @Override
-    public Mono<VehicleSimpleDTO> lookupVehicleSimple(String licensePlate) {
-        return vehicleLookupService.lookupVehicle(licensePlate)
+    public Mono<VehicleSimpleDTO> lookupVehicleSimple(String licensePlate, String userId) {
+        return vehicleLookupService.lookupVehicle(licensePlate, userId)
                 .map(this::convertToSimpleDTO);
     }
 
     @Override
-    public Mono<VehicleDetailedDTO> lookupVehicleDetailed(String licensePlate) {
-        return vehicleLookupService.lookupVehicle(licensePlate)
+    public Mono<VehicleDetailedDTO> lookupVehicleDetailed(String licensePlate, String userId) {
+        return vehicleLookupService.lookupVehicle(licensePlate, userId)
                 .flatMap(vehicle -> {
                     VehicleDetailedDTO dto = convertToDetailedDTO(vehicle);
                     return additionalDataService.addAdditionalVehicleData(dto);
