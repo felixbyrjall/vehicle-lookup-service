@@ -4,5 +4,7 @@ import com.github.felixbyrjall.vehiclelookup.model.Vehicle;
 import reactor.core.publisher.Mono;
 
 public interface VehicleLookupService {
-    Mono<Vehicle> lookupVehicle(String licensePlate);
+    Mono<Vehicle> lookupVehicle(String licensePlate, String userId);
+
+    void publishVehicleSearchedEvent(String licensePlate, String userId);
 }
